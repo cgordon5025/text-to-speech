@@ -1,0 +1,18 @@
+.bttn {
+    transition: all;
+}
+
+.bttn[data-state="play"] {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        background: rgba(116, 185, 255, 1.0);
+        box-shadow: 0 0 0 0 rgba(9, 132, 227, 1.0);
+    }
+
+    70% {
+        box-shadow: 0 0 0 1px rgba(243, 156, 18, 0);
+    }
+}

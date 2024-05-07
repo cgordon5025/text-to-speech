@@ -10,43 +10,24 @@ export const TtsProvider = ({ children }) => {
     const [loadStatus, setLoadStatus] = useState(false)
     const [isSpeaking, setIsSpeaking] = useState(false)
     const [phrases, setPhrases] = useState([])
+    const [preCuedPhrases, setPreCuedPhrases] = useState([])
     const synth = window.speechSynthesis
-
-    const weirdPhrase = "If you get in trouble or do something you shouldn't do, which fits?"
-    const adjustedPhrase = "If you get in trouble or do something you shouldn't doo, which fits?"
     const defaultPhrases = [
         {
-            id: "0.1.1.1",
-            phrase: "Hi my name is Spot"
+            id: "preCued:1",
+            phrase: "Hi this is precued"
         },
         {
-            id: "0.1.1.2",
-            phrase: "Hi my name is Hootie"
+            id: "preCued:2",
+            phrase: "Here is my second sentence"
+        }, {
+            id: "preCued:3",
+            phrase: "Third sentence is a bit longer sentence to read"
+        }, {
+            id: "preCued:4",
+            phrase: "Fourth sentence. The quick brown fox jumped over the lazy dog and then the lazy dog jumped over the quick brown fox"
         },
-        {
-            id: "0.1.1.3",
-            phrase: "Hi my name is Snap"
-        },
-        {
-            id: "0.1.1.4",
-            phrase: "Hi my name is Ginger"
-        },
-        {
-            id: "0.1.2",
-            phrase: "Welcome to the t Screen"
-        },
-        {
-            id: "0.1.3",
-            phrase: "Together we are going to discover more about you"
-        },
-        {
-            id: "0.1.4",
-            phrase: "As you answer questions I would like to see your whole face and see how you are feeling"
-        },
-        {
-            id: "0.1.5",
-            phrase: "Can you see your face?"
-        }
+
     ]
     const loadVoice = async () => {
         const primaryVoice = await synth.getVoices().filter((voice) => voice.voiceURI === "Google UK English Male")
@@ -90,9 +71,7 @@ export const TtsProvider = ({ children }) => {
         return [...new Set(array)]
         // return array
     }
-    useEffect(() => {
-        console.log(phrases)
-    }, [phrases])
+
     useEffect(() => {
         const readPhrases = async () => {
             // TODO: PERHAPS THIS CONDITION UP FRONT IS CAUSING IT?
@@ -102,12 +81,9 @@ export const TtsProvider = ({ children }) => {
                     synth.speak(utterThis)
                 }
                 const rate = .9
-                const _phrase = defaultPhrases.find(phrase => phrase.id === phrases[0].id)
-                console.log(_phrase)
-                const utterThis = new SpeechSynthesisUtterance(_phrase.phrase)
-                // const utterThis = phrases.length > 0 && phrases[0].text === weirdPhrase ?
-                //     new SpeechSynthesisUtterance(adjustedPhrase) :
-                //     new SpeechSynthesisUtterance(phrases[0]?.text)
+                // console.log(_phrase)
+                // const utterThis = new SpeechSynthesisUtterance(_phrase.phrase)
+                const utterThis = new SpeechSynthesisUtterance(phrases[0]?.text)
                 // TODO FIGURE OUT THE TIMING ON THIS DUE TO ASYNC AND LOOK AT QUESTION 4
                 utterThis.addEventListener("start", () => {
                     setIsSpeaking(true)
@@ -134,8 +110,61 @@ export const TtsProvider = ({ children }) => {
         }
         readPhrases()
     }, [phrases, isSpeaking])
-
-    const queuePhrase = (id, firstQuestion, manualClick) => {
+    useEffect(() => {
+        const readPhrases = async () => {
+            // TODO: PERHAPS THIS CONDITION UP FRONT IS CAUSING IT?
+            // think of way to prevent repeats, run a set before this? like if set/all original then run??
+            if (!isSpeaking && preCuedPhrases.length > 0) {
+                const retrySpeech = () => {
+                    synth.speak(utterThis)
+                }
+                const rate = .9
+                const _phrase = defaultPhrases.find(phrase => phrase.id === preCuedPhrases[0].id)
+                const utterThis = new SpeechSynthesisUtterance(_phrase.phrase)
+                // TODO FIGURE OUT THE TIMING ON THIS DUE TO ASYNC AND LOOK AT QUESTION 4
+                utterThis.addEventListener("start", () => {
+                    setIsSpeaking(true)
+                })
+                utterThis.addEventListener("end", () => {
+                    setIsSpeaking(false)
+                    // if (phrases.length > 0) {
+                    setPhrases(array => array.slice(1))
+                    // }
+                })
+                utterThis.onerror = (event) => {
+                    if (event.error === 'not-allowed') {
+                        setTimeout(retrySpeech, 250)
+                    } else {
+                        setIsSpeaking(false)
+                        setPhrases([])
+                    }
+                }
+                utterThis.rate = rate
+                utterThis.voice = finalVoice
+                synth.speak(utterThis)
+            }
+        }
+        readPhrases()
+    }, [preCuedPhrases, isSpeaking])
+    // const queuePhrase = (id, firstQuestion, manualClick) => {
+    //     if (firstQuestion) {
+    //         if (!manualClick) {
+    //             setPhrases(prevPhrases => [...prevPhrases, { id: id }])
+    //         } else {
+    //             synth.cancel()
+    //             setPhrases([{ id: id }])
+    //         }
+    //     } else if (!firstQuestion && !manualClick) {
+    //         setPhrases(prevPhrases => {
+    //             const sortedPhrases = sortPhrases([...prevPhrases, { id: id }])
+    //             return [... new Set(sortedPhrases)]
+    //         })
+    //     } else if (manualClick) {
+    //         setPhrases(prevPhrases => [...prevPhrases, { id: id }])
+    //     }
+    // }
+    //  NOTE ORIGINAL CODE
+    const prequeuePhrase = (id, firstQuestion, manualClick) => {
         if (firstQuestion) {
             if (!manualClick) {
                 setPhrases(prevPhrases => [...prevPhrases, { id: id }])
@@ -152,25 +181,24 @@ export const TtsProvider = ({ children }) => {
             setPhrases(prevPhrases => [...prevPhrases, { id: id }])
         }
     }
-    //  NOTE ORIGINAL CODE
-    // const queuePhrase = (text, id, firstQuestion, manualClick) => {
-    //     const synth = window.speechSynthesis
-    //     if (firstQuestion) {
-    //         if (!manualClick) {
-    //             setPhrases(prevPhrases => [...prevPhrases, { id: id, text: text }])
-    //         } else {
-    //             synth.cancel()
-    //             setPhrases([{ id: id, text: text }])
-    //         }
-    //     } else if (!firstQuestion && !manualClick) {
-    //         setPhrases(prevPhrases => {
-    //             const sortedPhrases = sortPhrases([...prevPhrases, { id: id, text: text }])
-    //             return [... new Set(sortedPhrases)]
-    //         })
-    //     } else if (manualClick) {
-    //         setPhrases(prevPhrases => [...prevPhrases, { id: id, text: text }])
-    //     }
-    // }
+    const queuePhrase = (text, id, firstQuestion, manualClick) => {
+        const synth = window.speechSynthesis
+        if (firstQuestion) {
+            if (!manualClick) {
+                setPhrases(prevPhrases => [...prevPhrases, { id: id, text: text }])
+            } else {
+                synth.cancel()
+                setPhrases([{ id: id, text: text }])
+            }
+        } else if (!firstQuestion && !manualClick) {
+            setPhrases(prevPhrases => {
+                const sortedPhrases = sortPhrases([...prevPhrases, { id: id, text: text }])
+                return [... new Set(sortedPhrases)]
+            })
+        } else if (manualClick) {
+            setPhrases(prevPhrases => [...prevPhrases, { id: id, text: text }])
+        }
+    }
     const handleStop = () => {
         if (isSpeaking) {
             setPhrases(array => array.slice(1))
@@ -187,6 +215,7 @@ export const TtsProvider = ({ children }) => {
         finalVoice,
         isActiveComponent,
         isSpeaking,
+        prequeuePhrase,
         // spokenWords,
         queuePhrase,
         handleStop,
