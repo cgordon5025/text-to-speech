@@ -128,7 +128,7 @@ export const TtsProvider = ({ children }) => {
                 utterThis.addEventListener("end", () => {
                     setIsSpeaking(false)
                     // if (phrases.length > 0) {
-                    setPhrases(array => array.slice(1))
+                    setPreCuedPhrases(array => array.slice(1))
                     // }
                 })
                 utterThis.onerror = (event) => {
@@ -136,7 +136,7 @@ export const TtsProvider = ({ children }) => {
                         // setTimeout(retrySpeech, 250)
                     } else {
                         setIsSpeaking(false)
-                        setPhrases([])
+                        setPreCuedPhrases([])
                     }
                 }
                 utterThis.rate = rate
