@@ -6,10 +6,11 @@ import { TtsProvider } from "../Context/TtsContext";
 import AutoReadPage from "./AutoReadPage";
 import ManualReadPage from "./ManualReadPage";
 import PreCuedList from "./PreCuedList";
-
+import Home from "./Home"
 const RoutersContainer = () => {
     return (
         <Routes>
+            <Route path='/' element={<Home />} />
             <Route path='autoRead' element={<AutoReadPage />} />
             <Route path='manualRead' element={<ManualReadPage />} />
             <Route path="PreCuedList" element={<PreCuedList />} />
