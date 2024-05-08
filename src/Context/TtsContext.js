@@ -15,7 +15,7 @@ export const TtsProvider = ({ children }) => {
     const defaultPhrases = [
         {
             id: "preCued:1",
-            phrase: "Hi this is precued"
+            phrase: "Hi this is pre cued"
         },
         {
             id: "preCued:2",
@@ -71,7 +71,9 @@ export const TtsProvider = ({ children }) => {
         return [...new Set(array)]
         // return array
     }
-
+    useEffect(() => {
+        console.log('preCued Phrases', preCuedPhrases)
+    }, [preCuedPhrases])
     useEffect(() => {
         const readPhrases = async () => {
             // TODO: PERHAPS THIS CONDITION UP FRONT IS CAUSING IT?
