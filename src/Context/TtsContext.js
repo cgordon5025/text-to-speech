@@ -97,7 +97,7 @@ export const TtsProvider = ({ children }) => {
                 utterThis.onerror = (event) => {
                     console.log(event)
                     if (event.error === 'not-allowed') {
-                        setTimeout(retrySpeech, 250)
+                        // setTimeout(retrySpeech, 250)
                     } else {
                         setIsSpeaking(false)
                         setPhrases([])
@@ -133,7 +133,7 @@ export const TtsProvider = ({ children }) => {
                 })
                 utterThis.onerror = (event) => {
                     if (event.error === 'not-allowed') {
-                        setTimeout(retrySpeech, 250)
+                        // setTimeout(retrySpeech, 250)
                     } else {
                         setIsSpeaking(false)
                         setPhrases([])
@@ -167,18 +167,18 @@ export const TtsProvider = ({ children }) => {
     const prequeuePhrase = (id, firstQuestion, manualClick) => {
         if (firstQuestion) {
             if (!manualClick) {
-                setPhrases(prevPhrases => [...prevPhrases, { id: id }])
+                setPreCuedPhrases(prevPhrases => [...prevPhrases, { id: id }])
             } else {
                 synth.cancel()
-                setPhrases([{ id: id }])
+                setPreCuedPhrases([{ id: id }])
             }
         } else if (!firstQuestion && !manualClick) {
-            setPhrases(prevPhrases => {
+            setPreCuedPhrases(prevPhrases => {
                 const sortedPhrases = sortPhrases([...prevPhrases, { id: id }])
                 return [... new Set(sortedPhrases)]
             })
         } else if (manualClick) {
-            setPhrases(prevPhrases => [...prevPhrases, { id: id }])
+            setPreCuedPhrases(prevPhrases => [...prevPhrases, { id: id }])
         }
     }
     const queuePhrase = (text, id, firstQuestion, manualClick) => {
@@ -209,7 +209,9 @@ export const TtsProvider = ({ children }) => {
     const isActiveComponent = (id) => {
         return id === phrases[0]?.id && isSpeaking
     }
-
+    const isActivePreCue = (id) => {
+        return id === preCuedPhrases[0]?.id && isSpeaking
+    }
     return (<TtsContext.Provider value={{
         loadVoice,
         finalVoice,
@@ -219,5 +221,6 @@ export const TtsProvider = ({ children }) => {
         // spokenWords,
         queuePhrase,
         handleStop,
+        isActivePreCue
     }}>{children}</TtsContext.Provider>)
 }

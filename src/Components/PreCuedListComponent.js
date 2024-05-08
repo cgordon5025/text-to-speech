@@ -5,11 +5,11 @@ import { useTtsContext } from "../Context/TtsContext";
 import { useEffect } from "react";
 
 export const PreCuedListComponent = ({ text, autoRead, presetId, ...rest }) => {
-    const { isSpeaking, prequeuePhrase, handleStop, isActiveComponent } = useTtsContext()
+    const { isSpeaking, prequeuePhrase, handleStop, isActivePreCue } = useTtsContext()
     const handlePlayClick = () => { prequeuePhrase(text, presetId, false, true) }
     const displayTitle = `${isSpeaking ? "Play" : "Stop"} audio`
 
-    const isActive = isActiveComponent(presetId)
+    const isActive = isActivePreCue(presetId)
 
     const handleStopClick = () => {
         handleStop()
