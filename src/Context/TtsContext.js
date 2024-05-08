@@ -74,6 +74,8 @@ export const TtsProvider = ({ children }) => {
     useEffect(() => {
         console.log('preCued Phrases', preCuedPhrases)
     }, [preCuedPhrases])
+
+    // auto read and getting the text fed to it version
     useEffect(() => {
         const readPhrases = async () => {
             // TODO: PERHAPS THIS CONDITION UP FRONT IS CAUSING IT?
@@ -112,6 +114,8 @@ export const TtsProvider = ({ children }) => {
         }
         readPhrases()
     }, [phrases, isSpeaking])
+
+    // pre cued options
     useEffect(() => {
         const readPhrases = async () => {
             // TODO: PERHAPS THIS CONDITION UP FRONT IS CAUSING IT?
@@ -201,6 +205,14 @@ export const TtsProvider = ({ children }) => {
             setPhrases(prevPhrases => [...prevPhrases, { id: id, text: text }])
         }
     }
+
+    const handlePrequeueStop = () => {
+        if (isSpeaking) {
+            setPreCuedPhrases(array => array.slice(1))
+            window.speechSynthesis.cancel()
+            setIsSpeaking(false)
+        }
+    }
     const handleStop = () => {
         if (isSpeaking) {
             setPhrases(array => array.slice(1))
@@ -223,6 +235,7 @@ export const TtsProvider = ({ children }) => {
         // spokenWords,
         queuePhrase,
         handleStop,
-        isActivePreCue
+        isActivePreCue,
+        handlePrequeueStop
     }}>{children}</TtsContext.Provider>)
 }
