@@ -3,6 +3,8 @@ import { PlayCircle } from "@mui/icons-material";
 
 import { useTtsContext } from "../Context/TtsContext";
 import { useEffect } from "react";
+import "./TextToSpeech.css"
+
 
 export const AutoReadComponent = ({ text, autoRead, presetId, ...rest }) => {
     const { isSpeaking, queuePhrase, handleStop, isActiveComponent } = useTtsContext()

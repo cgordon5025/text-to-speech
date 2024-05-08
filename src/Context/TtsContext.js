@@ -152,23 +152,7 @@ export const TtsProvider = ({ children }) => {
         }
         readPhrases()
     }, [preCuedPhrases, isSpeaking])
-    // const queuePhrase = (id, firstQuestion, manualClick) => {
-    //     if (firstQuestion) {
-    //         if (!manualClick) {
-    //             setPhrases(prevPhrases => [...prevPhrases, { id: id }])
-    //         } else {
-    //             synth.cancel()
-    //             setPhrases([{ id: id }])
-    //         }
-    //     } else if (!firstQuestion && !manualClick) {
-    //         setPhrases(prevPhrases => {
-    //             const sortedPhrases = sortPhrases([...prevPhrases, { id: id }])
-    //             return [... new Set(sortedPhrases)]
-    //         })
-    //     } else if (manualClick) {
-    //         setPhrases(prevPhrases => [...prevPhrases, { id: id }])
-    //     }
-    // }
+
     //  NOTE ORIGINAL CODE
     const prequeuePhrase = (id, firstQuestion, manualClick) => {
         if (firstQuestion) {
@@ -220,12 +204,33 @@ export const TtsProvider = ({ children }) => {
             setIsSpeaking(false)
         }
     }
+    const Tts = (text) => {
+        synth.cancel()
+        const rate = .9
+        const utterThis = new SpeechSynthesisUtterance(text)
+        utterThis.addEventListener("start", () => {
+            setIsSpeaking(true)
+        })
+        utterThis.addEventListener("end", () => {
+            setIsSpeaking(false)
+        })
+        utterThis.rate = rate
+        utterThis.voice = finalVoice
+        synth.speak(utterThis)
+    }
+    const stopTts = () => {
+        if (isSpeaking) {
+            synth.cancel()
+            setIsSpeaking(false)
+        }
+    }
     const isActiveComponent = (id) => {
         return id === phrases[0]?.id && isSpeaking
     }
     const isActivePreCue = (id) => {
         return id === preCuedPhrases[0]?.id && isSpeaking
     }
+    
     return (<TtsContext.Provider value={{
         loadVoice,
         finalVoice,
@@ -234,6 +239,8 @@ export const TtsProvider = ({ children }) => {
         prequeuePhrase,
         // spokenWords,
         queuePhrase,
+        Tts,
+        stopTts,
         handleStop,
         isActivePreCue,
         handlePrequeueStop
