@@ -8,10 +8,12 @@ import ManualReadPage from "./ManualReadPage";
 import PreQueuedList from "./PreQueuedList";
 import Home from "./Home"
 import OriginalTts from "./OriginalTts";
+import JustPlayground from "./JustPlayground";
 const RoutersContainer = () => {
     return (
         <Routes>
             <Route path='/' element={<Home />} />
+            <Route path='/Playground' element={<JustPlayground />} />
             <Route path='autoRead' element={<AutoReadPage />} />
             <Route path='manualRead' element={<ManualReadPage />} />
             <Route path="PreQueuedList" element={<PreQueuedList />} />

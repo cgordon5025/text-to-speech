@@ -2,13 +2,16 @@ import logo from './logo.svg';
 import './App.css';
 
 import { TtsProvider } from './Context/TtsContext';
-
+import RenderRoutes from './Pages/routes';
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <TtsProvider>
-          <img src={logo} className="App-logo" alt="logo" />
+          <div className='App'>
+            <RenderRoutes />
+          </div>
+          {/* <img src={logo} className="App-logo" alt="logo" />
 
           <p>
             Edit <code>src/App.js</code> and save to reload.
@@ -20,7 +23,7 @@ function App() {
             rel="noopener noreferrer"
           >
             Learn React
-          </a>
+          </a> */}
         </TtsProvider>
       </header>
     </div>

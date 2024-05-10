@@ -1,28 +1,32 @@
-import React, { Suspense } from "react";
+import Playground from "../Adventure/Playground";
 import { Canvas } from "@react-three/fiber";
-import { NoToneMapping } from "three"
+import { Suspense } from "react";
+import { NoToneMapping } from "three";
 import DefaultContainer from "../Components/DefaultContainer";
-export default function AdventureContainer({ children, survey, backgroundColor }) {
+const JustPlayground = () => {
     return (
         <div style={{ width: "100%", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <DefaultContainer
                 style={{
                     position: "relative",
-                    background: backgroundColor
+                    background: "#8EDAF2"
                 }}>
                 <Canvas
                     // frameloop="demand"
                     gl={{
                         antialias: true,
-                        // toneMapping: NoToneMapping
+                        toneMapping: NoToneMapping
                     }}
                 >
                     <Suspense fallback={null}>
-                        {children}
-                    </Suspense>
+                        <Playground
+                            camera={0}
+                            helper={"Fox"}
+                            helperAction={`FoxAction01`} />                    </Suspense>
                 </Canvas>
-                {survey()}
             </DefaultContainer>
         </div>
     )
 }
+
+export default JustPlayground
