@@ -5,7 +5,7 @@ import { Box, Typography } from "@mui/material";
 import { TtsProvider } from "../Context/TtsContext";
 import AutoReadPage from "./AutoReadPage";
 import ManualReadPage from "./ManualReadPage";
-import PreCuedList from "./PreCuedList";
+import PreQueuedList from "./PreQueuedList";
 import Home from "./Home"
 import OriginalTts from "./OriginalTts";
 const RoutersContainer = () => {
@@ -14,7 +14,7 @@ const RoutersContainer = () => {
             <Route path='/' element={<Home />} />
             <Route path='autoRead' element={<AutoReadPage />} />
             <Route path='manualRead' element={<ManualReadPage />} />
-            <Route path="PreQueuedList" element={<PreCuedList />} />
+            <Route path="PreQueuedList" element={<PreQueuedList />} />
             <Route path="originalTts" element={<OriginalTts />} />
         </Routes>
     )
