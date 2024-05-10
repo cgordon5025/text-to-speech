@@ -5,16 +5,14 @@ Command: npx gltfjsx@6.2.16 playground.gltf
 import React, { useEffect, useRef, useState } from 'react'
 import { useGLTF, PerspectiveCamera, useAnimations } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
-import FoxModel from "./FoxModel"
-import DogModel from "./DogModel"
-import OwlModel from "./OwlModel"
-import CrabModel from "./CrabModel"
+
 export default function Playground({ camera, helperAction, animationIndex, helper, ...props }) {
     const group = useRef()
     const { invalidate } = useThree()
-    const { nodes, materials, animations } = useGLTF('/assets/playground.gltf', function (gltf) {
-        gltf.scene.traverse(function (obj) { obj.frustumCulled = false })
-    })
+    const { nodes, materials, animations } = useGLTF('/assets/models/playground.gltf')
+    // const { nodes, materials, animations } = useGLTF('/assets/models/playground.gltf', function (gltf) {
+    //     gltf.scene.traverse(function (obj) { obj.frustumCulled = false })
+    // })
 
     const { actions, mixer } = useAnimations(animations, group)
     useEffect(() => {
@@ -32,7 +30,6 @@ export default function Playground({ camera, helperAction, animationIndex, helpe
     return (
         <group ref={group} {...props} dispose={null}>
             <group name="Scene">
-
                 <ambientLight frustumCulled={false} color="#ffffff" intensity={0.5} castShadow />
                 <directionalLight frustumCulled={false} color="#ffffff" intensity={1} position={[0, 32, 64]} />
                 <group name="fox_rig" position={[0.183, 0.034, 1.211]} rotation={[0, -0.004, 0]} scale={0.001}>
@@ -124,4 +121,4 @@ export default function Playground({ camera, helperAction, animationIndex, helpe
     )
 }
 
-useGLTF.preload('/assets/playground.gltf')
+useGLTF.preload('/assets/models/playground.gltf')
