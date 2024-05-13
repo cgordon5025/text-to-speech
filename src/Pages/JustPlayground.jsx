@@ -22,7 +22,7 @@ const JustPlayground = () => {
                         <Playground
                             camera={0}
                             helper={"Fox"}
-                            helperAction={`FoxAction01`} />                    </Suspense>
+                            helperAction={"FoxAction01"} />                    </Suspense>
                 </Canvas>
             </DefaultContainer>
         </div>

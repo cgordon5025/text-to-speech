@@ -13,6 +13,7 @@ export default function Playground({ camera, helperAction, animationIndex, helpe
     // const { nodes, materials, animations } = useGLTF('/assets/models/playground.gltf', function (gltf) {
     //     gltf.scene.traverse(function (obj) { obj.frustumCulled = false })
     // })
+    console.log(camera, helper, helperAction)
 
     const { actions, mixer } = useAnimations(animations, group)
     useEffect(() => {
