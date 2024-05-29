@@ -14,12 +14,16 @@ const mySentences = [
 ]
 const TtsComponent = () => {
     return (
-        <DefaultContainer>
-            <OriginalTtsComponent text={mySentences[0]} presetId="original:1" />
-            <OriginalTtsComponent text={mySentences[1]} presetId="original:2" />
-            <OriginalTtsComponent text={mySentences[2]} presetId="original:3" />
-            <OriginalTtsComponent text={mySentences[3]} presetId="original:4" />
-        </DefaultContainer>
+        <DefaultContainer style={{ position: "absolute", top: "0px", background: "none" }}>
+            <div style={{ width: "100%", height: "100%", position: "relative", backgroundPosition: "cover", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <div style={{ backgroundColor: "white" }}>
+                <OriginalTtsComponent text={mySentences[0]} presetId="original:1" />
+                <OriginalTtsComponent text={mySentences[1]} presetId="original:2" />
+                <OriginalTtsComponent text={mySentences[2]} presetId="original:3" />
+                <OriginalTtsComponent text={mySentences[3]} presetId="original:4" />
+            </div>
+        </div>
+        </DefaultContainer >
     )
 }
 const OriginalTts = () => {
@@ -34,10 +38,10 @@ const OriginalTts = () => {
 
     return (
         <AdventureContainer survey={() => <TtsComponent />} backgroundColor="#8EDAF2">
-            <Playground
+            {/* <Playground
                 camera={0}
                 helper={"Fox"}
-                helperAction={`FoxAction01`} />
+                helperAction={`FoxAction01`} /> */}
         </AdventureContainer>
     )
 }

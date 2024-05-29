@@ -4,7 +4,7 @@ import { NoToneMapping } from "three"
 import DefaultContainer from "../Components/DefaultContainer";
 export default function AdventureContainer({ children, survey, backgroundColor }) {
     return (
-        <div style={{ width: "100%", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div id='adventureContainer' style={{ width: "100%", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <DefaultContainer
                 style={{
                     position: "relative",
@@ -14,7 +14,7 @@ export default function AdventureContainer({ children, survey, backgroundColor }
                     // frameloop="demand"
                     gl={{
                         antialias: true,
-                        // toneMapping: NoToneMapping
+                        toneMapping: NoToneMapping
                     }}
                 >
                     <Suspense fallback={null}>

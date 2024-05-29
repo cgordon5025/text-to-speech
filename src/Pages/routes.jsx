@@ -9,6 +9,7 @@ import PreQueuedList from "./PreQueuedList";
 import Home from "./Home"
 import OriginalTts from "./OriginalTts";
 import JustPlayground from "./JustPlayground";
+import SpeakTts from "./SpeakTts";
 const RoutersContainer = () => {
     return (
         <Routes>
@@ -18,6 +19,7 @@ const RoutersContainer = () => {
             <Route path='manualRead' element={<ManualReadPage />} />
             <Route path="PreQueuedList" element={<PreQueuedList />} />
             <Route path="originalTts" element={<OriginalTts />} />
+            <Route path='speakTts' element={<SpeakTts />} />
         </Routes>
     )
 }
@@ -30,8 +32,12 @@ const RenderRoutes = () => {
                     <Typography as={Link} to={`/autoRead`}>To Auto Read Testing</Typography>
                     <Typography as={Link} to={`/PreQueuedList`}>To Pre-Queued List Testing</Typography>
                     <Typography as={Link} to={'/originalTts'}>To original Tts Testing</Typography>
+                    <Typography as={Link} to={'/manualRead'}>To Manual Read</Typography>
+                    <Typography as={Link} to={"/speakTts"}>To Speak Tts</Typography>
                 </Box>
-                <RoutersContainer />
+                <Box component="div" sx={{ backgroundColor: "#F3F6F9", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <RoutersContainer />
+                </Box>
             </Box>
         </TtsProvider>
     )

@@ -9,10 +9,10 @@ import { useFrame, useThree } from '@react-three/fiber'
 export default function Playground({ camera, helperAction, animationIndex, helper, ...props }) {
     const group = useRef()
     const { invalidate } = useThree()
-    const { nodes, materials, animations } = useGLTF('/assets/models/playground.gltf')
-    // const { nodes, materials, animations } = useGLTF('/assets/models/playground.gltf', function (gltf) {
-    //     gltf.scene.traverse(function (obj) { obj.frustumCulled = false })
-    // })
+    // const { nodes, materials, animations } = useGLTF('/assets/models/playground.gltf')
+    const { nodes, materials, animations } = useGLTF('/assets/models/playground.gltf', function (gltf) {
+        gltf.scene.traverse(function (obj) { obj.frustumCulled = false })
+    })
     console.log(camera, helper, helperAction)
 
     const { actions, mixer } = useAnimations(animations, group)
