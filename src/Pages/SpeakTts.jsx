@@ -3,7 +3,7 @@ import Speech from 'speak-tts'
 
 const SpeakTts = () => {
     const speech = new Speech()
-    speech.setLanguage('en-GB')
+    // speech.setLanguage('en-GB')
     // speech.setVoice('Google UK English Male')
     function initiateSpeak() {
         speech.init().then((data) => {
