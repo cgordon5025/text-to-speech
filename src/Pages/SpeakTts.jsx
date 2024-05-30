@@ -5,9 +5,21 @@ const SpeakTts = () => {
     const speech = new Speech()
     // speech.setLanguage('en-GB')
     // speech.setVoice('Google UK English Male')
+
     function initiateSpeak() {
         speech.init().then((data) => {
-            console.log(data)
+            var temp = data.voices.filter((voice) => {
+                return voice.lang === 'en-GB'
+            })
+            return temp
+        }).then((res) => {
+            res.map((voice) => {
+                console.log(voice)
+                if (voice.voiceURI.includes("Male")) {
+                    console.log('male voice')
+                    console.log(voice)
+                }
+            })
         }).catch(e => {
             console.log('error', e)
         })
