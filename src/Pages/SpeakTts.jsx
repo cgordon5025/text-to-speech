@@ -13,11 +13,24 @@ const SpeakTts = () => {
             })
             return temp
         }).then((res) => {
-            res.map((voice) => {
+            let conditionMet = false
+            res.forEach((voice, index) => {
                 console.log(voice)
+                if (conditionMet) {
+                    return
+                }
                 if (voice.voiceURI.includes("Male")) {
-                    console.log('male voice')
-                    console.log(voice)
+                    speech.setVoice(voice.name)
+                    conditionMet = true
+                    return;
+                } else if (voice.voiceURI === 'Android Speech Recognition and Synthesis from Google en-gb-x-rjs-local') {
+                    speech.setVoice(voice.name)
+                    conditionMet = true
+                    return;
+                } else if (index === res.length - 1 && !conditionMet) {
+                    console.log('none of the above found, using this one', voice)
+                    speech.setVoice(voice.name)
+                    return;
                 }
             })
         }).catch(e => {
@@ -31,6 +44,7 @@ const SpeakTts = () => {
     }
     function talk() {
         speech.speak({ text: "hellow world" })
+        console.log(speech)
     }
     return (
         <div>
