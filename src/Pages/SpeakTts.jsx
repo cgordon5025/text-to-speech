@@ -14,17 +14,19 @@ const SpeakTts = () => {
             return temp
         }).then((res) => {
             let conditionMet = false
+            console.log(res)
             res.forEach((voice, index) => {
-                console.log(voice)
                 if (conditionMet) {
                     return
                 }
                 if (voice.voiceURI.includes("Male")) {
                     speech.setVoice(voice.name)
+                    console.log('the original for windows')
                     conditionMet = true
                     return;
                 } else if (voice.voiceURI === 'Android Speech Recognition and Synthesis from Google en-gb-x-rjs-local') {
                     speech.setVoice(voice.name)
+                    console.log('the one for chrome')
                     conditionMet = true
                     return;
                 } else if (index === res.length - 1 && !conditionMet) {
