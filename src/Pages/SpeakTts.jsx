@@ -3,7 +3,8 @@ import Speech from 'speak-tts'
 
 const SpeakTts = () => {
     const speech = new Speech()
-    // speech.setLanguage('en-GB')
+    speech.setLanguage('en-GB')
+    speech.setRate(.9)
     // speech.setVoice('Google UK English Male')
 
     function initiateSpeak() {
@@ -45,8 +46,29 @@ const SpeakTts = () => {
         // })
     }
     function talk() {
-        speech.speak({ text: "hellow world" })
-        console.log(speech)
+        console.log('clicking')
+        speech.speak({
+            text: "Hi my name is Spot! Welcome to the t Screen. Together we are going to discover more about you. As you answer questions I would like to see your whole face and see how you are feeling. Can you see your face?",
+            queue: false,
+            listeners: {
+                onstart: () => {
+                    console.log("Start utterance")
+                },
+                onend: () => {
+                    console.log("End utterance")
+                },
+                onresume: () => {
+                    console.log("Resume utterance")
+                },
+                onboundary: (event) => {
+                    console.log(event.name + ' boundary reached after ' + event.elapsedTime + ' milliseconds.')
+                }
+            }
+        }).then(() => {
+            console.log("Success !")
+        }).catch(e => {
+            console.error("An error occurred :", e)
+        })
     }
     return (
         <div>
