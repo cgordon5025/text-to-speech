@@ -23,10 +23,10 @@ const ManualComponent = () => {
 const ManualReadPage = () => {
     return (
         <AdventureContainer survey={() => <ManualComponent />} backgroundColor="#8EDAF2">
-            {/* <Playground
+            <Playground
                 camera={0}
                 helper={"Fox"}
-                helperAction={`FoxAction01`} /> */}
+                helperAction={`FoxAction01`} />
         </AdventureContainer>
     )
 }

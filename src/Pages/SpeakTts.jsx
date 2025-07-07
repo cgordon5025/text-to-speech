@@ -1,5 +1,6 @@
 import { Button } from '@mui/material'
 import Speech from 'speak-tts'
+import { splitSentences } from 'speak-tts/lib/utils'
 
 const SpeakTts = () => {
     const speech = new Speech()
@@ -8,7 +9,15 @@ const SpeakTts = () => {
     // speech.setVoice('Google UK English Male')
 
     function initiateSpeak() {
-        speech.init().then((data) => {
+        speech.init({
+            rate: 0.1, splitSentences: true,
+            lang: 'en-GB',
+            listeners: {
+                'onvoiceschanged': (voices) => {
+                    console.log("Event voiceschanged", voices)
+                }
+            }
+        }).then((data) => {
             var temp = data.voices.filter((voice) => {
                 return voice.lang === 'en-GB'
             })
@@ -47,9 +56,35 @@ const SpeakTts = () => {
     }
     function talk() {
         console.log('clicking')
+        console.log(speech)
         speech.speak({
             text: "Hi my name is Spot! Welcome to the t Screen. Together we are going to discover more about you. As you answer questions I would like to see your whole face and see how you are feeling. Can you see your face?",
-            queue: false,
+            queue: true,
+            listeners: {
+                onstart: () => {
+                    console.log("Start utterance")
+                },
+                onend: () => {
+                    console.log("End utterance")
+                },
+                onresume: () => {
+                    // console.log("Resume utterance")
+                },
+                onboundary: (event) => {
+                    // console.log(event.name + ' boundary reached after ' + event.elapsedTime + ' milliseconds.')
+                }
+            }
+        }).then(() => {
+            console.log("Success !")
+        }).catch(e => {
+            console.error("An error occurred :", e)
+        })
+    }
+    function sentence2() {
+        console.log('clicking')
+        speech.speak({
+            text: "Do the best you can. Make sure to click where needed and say your answers out loud when you see this icon. This is a safe place to share your feelings. All your answers are private.",
+            queue: true,
             listeners: {
                 onstart: () => {
                     console.log("Start utterance")
@@ -74,7 +109,7 @@ const SpeakTts = () => {
         <div>
             <Button onClick={initiateSpeak}>Get Speech</Button>
             <Button onClick={talk}>Talk Speech</Button>
-
+            <Button onClick={sentence2}>Talk Speech</Button>
         </div>
     )
 }

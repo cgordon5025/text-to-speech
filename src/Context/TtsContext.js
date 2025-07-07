@@ -71,9 +71,9 @@ export const TtsProvider = ({ children }) => {
         return [...new Set(array)]
         // return array
     }
-    useEffect(() => {
-        console.log('preCued Phrases', preCuedPhrases)
-    }, [preCuedPhrases])
+    // useEffect(() => {
+    //     console.log('preCued Phrases', preCuedPhrases)
+    // }, [preCuedPhrases])
 
     // auto read and getting the text fed to it version
     useEffect(() => {
@@ -230,7 +230,7 @@ export const TtsProvider = ({ children }) => {
     const isActivePreCue = (id) => {
         return id === preCuedPhrases[0]?.id && isSpeaking
     }
-    
+
     return (<TtsContext.Provider value={{
         loadVoice,
         finalVoice,

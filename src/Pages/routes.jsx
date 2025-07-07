@@ -7,40 +7,67 @@ import AutoReadPage from "./AutoReadPage";
 import ManualReadPage from "./ManualReadPage";
 import PreQueuedList from "./PreQueuedList";
 import Home from "./Home"
-import OriginalTts from "./OriginalTts";
-import JustPlayground from "./JustPlayground";
+// import OriginalTts from "./OriginalTts";
+// import JustPlayground from "./JustPlayground";
+import AzureTts from "./AzureTTS";
+import CameraTest from "./CameraTest"
 import SpeakTts from "./SpeakTts";
+import { NewTtsProvider, useNewTtsContext } from "../Context/NewTtsContext";
+import { CameraProvider } from "../Context/CameraContext";
+import RecordWebcam from "../Components/RecordWebcam";
 const RoutersContainer = () => {
     return (
         <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/Playground' element={<JustPlayground />} />
+            {/* <Route path='/Playground' element={<JustPlayground />} /> */}
             <Route path='autoRead' element={<AutoReadPage />} />
             <Route path='manualRead' element={<ManualReadPage />} />
             <Route path="PreQueuedList" element={<PreQueuedList />} />
-            <Route path="originalTts" element={<OriginalTts />} />
+            {/* <Route path="originalTts" element={<OriginalTts />} /> */}
             <Route path='speakTts' element={<SpeakTts />} />
+            <Route path="azure" element={<AzureTts />} />
+            <Route path="camera" element={<CameraTest />} />
         </Routes>
     )
 }
 
 const RenderRoutes = () => {
     return (
-        <TtsProvider>
-            <Box component='div' sx={{ backgroundColor: "#F3F6F9", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
-                <Box component='div' sx={{ display: "flex", justifyContent: "space-between", width: "50%" }}>
-                    <Typography as={Link} to={`/autoRead`}>To Auto Read Testing</Typography>
-                    <Typography as={Link} to={`/PreQueuedList`}>To Pre-Queued List Testing</Typography>
-                    <Typography as={Link} to={'/originalTts'}>To original Tts Testing</Typography>
-                    <Typography as={Link} to={'/manualRead'}>To Manual Read</Typography>
-                    <Typography as={Link} to={"/speakTts"}>To Speak Tts</Typography>
-                </Box>
-                <Box component="div" sx={{ backgroundColor: "#F3F6F9", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <RoutersContainer />
-                </Box>
-            </Box>
-        </TtsProvider>
+        <NewTtsProvider>
+            <TtsProvider>
+                <CameraProvider>
+                    <RecordWebcam />
+                    <Box component='div' sx={{ backgroundColor: "#F3F6F9", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
+                        <Box component='div' sx={{ display: "flex", justifyContent: "space-between", width: "50%", zIndex: 10 }}>
+                            <Typography as={Link} to={`/autoRead`}>To Auto Read Testing</Typography>
+                            <Typography as={Link} to={`/PreQueuedList`}>To Pre-Queued List Testing</Typography>
+                            {/* <Typography as={Link} to={'/originalTts'}>To original Tts Testing</Typography> */}
+                            <Typography as={Link} to={'/manualRead'}>To Manual Read</Typography>
+                            <Typography as={Link} to={"/speakTts"}>To Speak Tts</Typography>
+                            <AzureTtsButton />
+                            <Typography as={Link} to={"/camera"}>To camera test</Typography>
+                            {/* <Typography as={Link} to={"/azure"}>To AzureTTS</Typography> */}
+                        </Box>
+                        <Box component="div" sx={{ backgroundColor: "#F3F6F9", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <RoutersContainer />
+                        </Box>
+                    </Box>
+                </CameraProvider>
+            </TtsProvider>
+        </NewTtsProvider>
     )
 }
 
+const AzureTtsButton = () => {
+    const { sudoInit } = useNewTtsContext()
+    return (
+        <Typography component={Link}
+            to={"/azure"}
+            style={{ all: "unset", cursor: "pointer", color: "blue", textDecoration: "underline" }}
+            onClick={() => { sudoInit() }}
+        >
+            To AzureTTS
+        </Typography >
+    )
+}
 export default RenderRoutes
