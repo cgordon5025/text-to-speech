@@ -1,11 +1,11 @@
-import { Box, IconButton, Typography } from "@mui/material";
-import { PlayCircle } from "@mui/icons-material";
+import { Typography } from "@mui/material";
+// import { PlayCircle } from "@mui/icons-material";
 import { useNewTtsContext } from "../Context/NewTtsContext";
 import { useEffect, useState } from "react"
 import { AzureComponent } from "../Components/AzureComponent";
 import DefaultContainer from "../Components/DefaultContainer";
 const AzureTts = () => {
-    const { autoPlay, sudoInit, isInit } = useNewTtsContext();
+    const { autoPlay, isInit } = useNewTtsContext();
     const [safetyStop, setSafetyStop] = useState(false)
     useEffect(() => {
         if (safetyStop && isInit) {

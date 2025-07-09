@@ -5,23 +5,23 @@ export const NewTtsContext = createContext()
 
 export const useNewTtsContext = () => useContext(NewTtsContext);
 
-const defaultPhrases = [
-    {
-        id: "preCued:1",
-        phrase: "Hi this is pre cued"
-    },
-    {
-        id: "preCued:2",
-        phrase: "Here is my second sentence"
-    }, {
-        id: "preCued:3",
-        phrase: "Third sentence is a bit longer sentence to read"
-    }, {
-        id: "preCued:4",
-        phrase: "Fourth sentence. The quick brown fox jumped over the lazy dog and then the lazy dog jumped over the quick brown fox"
-    },
+// const defaultPhrases = [
+//     {
+//         id: "preCued:1",
+//         phrase: "Hi this is pre cued"
+//     },
+//     {
+//         id: "preCued:2",
+//         phrase: "Here is my second sentence"
+//     }, {
+//         id: "preCued:3",
+//         phrase: "Third sentence is a bit longer sentence to read"
+//     }, {
+//         id: "preCued:4",
+//         phrase: "Fourth sentence. The quick brown fox jumped over the lazy dog and then the lazy dog jumped over the quick brown fox"
+//     },
 
-]
+// ]
 const apiKey = "removed"
 const region = "eastus"
 
@@ -39,7 +39,7 @@ export const NewTtsProvider = ({ children }) => {
     const [isSpeaking, setIsSpeaking] = useState(false)
     const [isInit, setIsInit] = useState(false)
     const [speechConfig, setSpeechConfig] = useState(null)
-    const [audioConfig, setAudioConfig] = useState(null);
+    // const [audioConfig, setAudioConfig] = useState(null);
     const synthRef = useRef(null);
     const audioRef = useRef(null);
     const sourceNodeRef = useRef(null);
@@ -54,7 +54,7 @@ export const NewTtsProvider = ({ children }) => {
             const _audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
             setSpeechConfig(_speechConfig);
             setLoadStatus(true);
-
+            console.log(loadStatus)
         } catch (error) {
             console.log("failed to init speech cnofig: ", error)
         }
@@ -98,12 +98,12 @@ export const NewTtsProvider = ({ children }) => {
             setPhrases(prev => prev.slice(1));
         }
     }
-    useEffect(() => {
-        console.log("phrases:", phrases)
-    }, [phrases])
-    useEffect(() => {
-        console.log("has permission: ", isInit)
-    }, [isInit])
+    // useEffect(() => {
+    //     console.log("phrases:", phrases)
+    // }, [phrases])
+    // useEffect(() => {
+    //     console.log("has permission: ", isInit)
+    // }, [isInit])
     const stopAudio = () => {
         if (sourceNodeRef.current) {
             try {

@@ -1,6 +1,6 @@
 import { Button } from '@mui/material'
 import Speech from 'speak-tts'
-import { splitSentences } from 'speak-tts/lib/utils'
+// import { splitSentences } from 'speak-tts/lib/utils'
 
 const SpeakTts = () => {
     const speech = new Speech()

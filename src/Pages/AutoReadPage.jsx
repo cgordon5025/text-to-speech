@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Box, Typography } from "@mui/material"
+// import React, { useState, useEffect } from "react";
+import { Typography } from "@mui/material"
 import { AutoReadComponent } from "../Components/AutoReadComponent";
 import DefaultContainer from "../Components/DefaultContainer";
-import Playground from "../Adventure/Playground";
+// import Playground from "../Adventure/Playground";
 import AdventureContainer from "../Adventure/AdventureContainer";
 const AutoComponent = () => {
     return (

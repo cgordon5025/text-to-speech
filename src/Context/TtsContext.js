@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useRef } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 export const TtsContext = createContext()
 
@@ -81,9 +81,9 @@ export const TtsProvider = ({ children }) => {
             // TODO: PERHAPS THIS CONDITION UP FRONT IS CAUSING IT?
             // think of way to prevent repeats, run a set before this? like if set/all original then run??
             if (!isSpeaking && phrases.length > 0) {
-                const retrySpeech = () => {
-                    synth.speak(utterThis)
-                }
+                // const retrySpeech = () => {
+                //     synth.speak(utterThis)
+                // }
                 const rate = .9
                 // console.log(_phrase)
                 // const utterThis = new SpeechSynthesisUtterance(_phrase.phrase)

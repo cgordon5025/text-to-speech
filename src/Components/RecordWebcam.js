@@ -3,7 +3,7 @@ import { useCameraContext } from "../Context/CameraContext";
 import { useRecordWebcam } from "react-record-webcam";
 
 const RecordWebcam = () => {
-    const { cameraSettings, status, handleStartRecording, handleDoneProcessing, handleOpenCamera, setVideoData } = useCameraContext()
+    const { cameraSettings, handleStartRecording, handleDoneProcessing, handleOpenCamera, setVideoData } = useCameraContext()
     const { activeRecordings, createRecording, devicesByType, openCamera, startRecording, errorMessage, stopRecording, download } = useRecordWebcam({ options: cameraSettings.options, mediaRecorderOptions: cameraSettings.recorderOptions });
 
     useEffect(() => {
@@ -15,7 +15,7 @@ const RecordWebcam = () => {
         }
     }, [cameraSettings.start])
     useEffect(() => {
-        if (cameraSettings.open && activeRecordings[0]?.id && activeRecordings[0]?.status == "OPEN") {
+        if (cameraSettings.open && activeRecordings[0]?.id && activeRecordings[0]?.status === "OPEN") {
             handleStartRecording()
             console.log("setting to start")
         }
@@ -39,19 +39,14 @@ const RecordWebcam = () => {
         console.log("some error with the camera is happeneing: ", errorMessage)
     }, [errorMessage])
 
-    useEffect(() => {
-        console.log("something is changing with the active recording: ", activeRecordings)
-    }, [activeRecordings])
-
     const start = async () => {
         const recording = await createRecording(devicesByType?.video[0]?.deviceId, devicesByType?.audio[0]?.deviceId);
         if (recording?.id) {
-            console.log("the camera is opening: ", recording)
             await openCamera(recording.id)
             handleOpenCamera()
         }
     }
-
+    return null
     const stop = async () => {
         await stopRecording(activeRecordings[0].id)
         setTimeout(() => {

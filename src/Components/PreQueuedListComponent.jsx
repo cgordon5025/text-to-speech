@@ -17,15 +17,15 @@ export const PreQueuedListComponent = ({ text, autoRead, presetId, ...rest }) =>
         handlePrequeueStop()
     }
 
-    useEffect(() => {
-        if (text) {
-            if (autoRead && presetId === 'autoRead:1') {
-                prequeuePhrase(presetId, true)
-            } else {
-                prequeuePhrase(presetId, true, false)
-            }
-        }
-    }, [text])
+    // useEffect(() => {
+    //     if (text) {
+    //         if (autoRead && presetId === 'autoRead:1') {
+    //             prequeuePhrase(presetId, true)
+    //         } else {
+    //             prequeuePhrase(presetId, true, false)
+    //         }
+    //     }
+    // }, [text])
 
     return (
         <Box component="div" display="flex" alignItems="flex-center" justifyContent="center">
